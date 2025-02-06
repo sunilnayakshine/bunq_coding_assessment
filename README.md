@@ -21,7 +21,7 @@ To set up the project locally, follow these steps:
 1. Clone the repository:
     ```bash
     git clone https://github.com/sunilnayakshine/bunq_coding_assessment.git
-    cd <your-repository-name>
+    cd bunq_coding_assessment
     ```
 
    
@@ -32,8 +32,8 @@ To set up the project locally, follow these steps:
     ```
 3. Strat the server on port 8080.
 	```bash
-	docker run -d -p 8080:8080 bunq-chat-back-api 
-	```
+	docker run -p 8080:8080 bunq-chat-back-api
+ 	```
 
 
 Now the API should be up and running at `http://localhost:8080`.

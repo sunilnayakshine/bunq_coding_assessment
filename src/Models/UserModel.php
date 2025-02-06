@@ -31,7 +31,7 @@ class UserModel
         
         if ($existingUser) {
             // User already exists
-            throw new \Exception('Username already exists. Please another username.');
+            throw new \Exception('Username already exists. Please try another username.');
         }
 
         // Proceed to insert the new user

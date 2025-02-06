@@ -47,7 +47,7 @@ Now the API should be up and running at `http://localhost:8000`.
         ```json
         {
             "username": "string",
-            "password": "string",
+            "password": "string"
         }
         ```
     - Response: 
@@ -132,7 +132,7 @@ curl -X POST http://localhost:8000/sign-up \
     -H "Content-Type: application/json" \
     -d '{
         "username": "user1",
-        "password": "password123",
+        "password": "password123"
     }'
 ``` 
 ### Example: Create a new group
@@ -154,8 +154,8 @@ curl -v -X POST http://localhost:8080/join-group \
 -d '{
 	  "username": "user1",
 	  "password": "password123",
-	  "group_name": "Bunq Chat Group
-"}'
+	  "group_name": "Bunq Chat Group'
+}'
 ``` 
 ### Example: Send Message
 ```bash
@@ -190,7 +190,7 @@ curl -X POST http://localhost:8000/sign-up \
 -H "Content-Type: application/json" \
 -d '{
       "username": "ImThere",
-      "password": "password123",
+      "password": "password123"
     }'
 ```
 2. What if I'm trying to access Bunq Chat API without sign up ?
@@ -212,7 +212,7 @@ curl -v -X POST http://localhost:8080/join-group \
 -d '{
 	  "username": "user1",
 	  "password": "password123",
-	  "group_name": "Bunq Chat Group
+	  "group_name": "Bunq Chat Group"
 "}'
 ```
 

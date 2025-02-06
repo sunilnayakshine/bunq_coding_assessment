@@ -63,6 +63,9 @@ class GroupController
 
         // Create the group
         $groupId = $this->groupModel->createGroup($groupname, $groupdescription, $username);
+	
+	// By default add user to group
+	$this->groupModel->adduserToGroup($username, $groupname);
 
         $response = $response->withHeader('Content-Type', 'application/json');
         $response->getBody()->write(json_encode(['message' => 'Group created successfully', 'Group Name' => $groupname]));

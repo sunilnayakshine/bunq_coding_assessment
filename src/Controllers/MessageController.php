@@ -19,7 +19,7 @@ class MessageController
     }
 
     // Method to handle message creation
-    public function sendMessage(Request $request, Response $response, $args)
+    public function sendMessage(Request $request, Response $response, array $args)
     {
         $rawdata = (string) $request->getBody(); // Get the request data
         error_log("received data: " . $rawdata);
@@ -29,11 +29,40 @@ class MessageController
         $username = $data['username'];
         $password = $data['password'];
         $message = $data['message'];
-        $groupName = $data['group_name'];
+        $groupname = $data['group_name'];
+
+        // Verify user credentials
+        $isValidUser = $this->userModel->verifyUserCredentials($username, $password);
+
+        if (!$isValidUser) {
+            $response = $response->withStatus(401)
+                ->withHeader('Content-Type', 'application/json');
+            $response->getBody()->write(json_encode(['error' => 'Invalid username or password. Please signup if your using Bunq Chat API for the first time.']));
+            return $response;
+        }
+
+        // Check if the group exists
+        $isValidGroupName = $this->groupModel->doesGroupExist($groupname);  // Fetch group ID based on group name
+
+        if (!$isValidGroupName) {
+            $response = $response->withStatus(404)
+                ->withHeader('Content-Type', 'application/json');
+            $response->getBody()->write(json_encode(['error' => 'Group not found']));
+            return $response;
+        }
+
+        // Check if the user is in the group
+        if (!$this->groupModel->isUserInGroup($groupname, $username)) {
+            $response = $response->withStatus(400)
+                ->withHeader('Content-Type', 'application/json');
+            $response->getBody()->write(json_encode(['message' => 'User not belongs group.']));
+            error_log("done ");
+            return $response;
+        }
 
         try {
             // Create a new message in the database
-            $messageId = $this->messageModel->createMessage($username, $message, $groupName);
+            $messageId = $this->messageModel->createMessage($username, $message, $groupname);
 
             // Prepare the response data
             $responseData = [
@@ -58,26 +87,26 @@ class MessageController
     }
 
     // Method to handle retrieving messages by group
-    public function getMessages(Request $request, Response $response, $args)
+    public function getMessages(Request $request, Response $response, array $args)
     {
         $rawdata = (string) $request->getBody();
         $data = json_decode($rawdata, true);
-        $groupName = $data['group_name']; // Get the group name from the URL parameter
-        $userName = $data['username'];
+        $groupname = $data['group_name']; // Get the group name from the URL parameter
+        $username = $data['username'];
         $password = $data['password'];
 
         // Verify user credentials
-        $isValidUser = $this->userModel->verifyUserCredentials($userName, $password);
+        $isValidUser = $this->userModel->verifyUserCredentials($username, $password);
 
         if (!$isValidUser) {
             $response = $response->withStatus(401)
                 ->withHeader('Content-Type', 'application/json');
-            $response->getBody()->write(json_encode(['error' => 'Invalid username or password']));
+            $response->getBody()->write(json_encode(['error' => 'Invalid username or password. Please singup if your using Bunq Chat API for the first time.']));
             return $response;
         }
 
         // Check if the group exists
-        $isValidGroupName = $this->groupModel->doesGroupExist($groupName);  // Fetch group ID based on group name
+        $isValidGroupName = $this->groupModel->doesGroupExist($groupname);
 
         if (!$isValidGroupName) {
             $response = $response->withStatus(404)
@@ -87,7 +116,7 @@ class MessageController
         }
 
         // Check if the user is in the group
-        if (!$this->groupModel->isUserInGroup($groupName, $userName)) {
+        if (!$this->groupModel->isUserInGroup($groupname, $username)) {
             $response = $response->withStatus(400)
                 ->withHeader('Content-Type', 'application/json');
             $response->getBody()->write(json_encode(['message' => 'User not belongs group.']));
@@ -98,7 +127,7 @@ class MessageController
         try {
                 // Fetch messages for the specified group
 
-            $messages = $this->messageModel->getMessagesByGroup($groupName);
+            $messages = $this->messageModel->getMessagesByGroup($groupname);
 
             // Prepare the response data
             $responseData = [

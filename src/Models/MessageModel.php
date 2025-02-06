@@ -12,7 +12,7 @@ class MessageModel
     {
         // Database connection
         try {
-            $this->db = new PDO('sqlite:/var/www/html/database/chat.db');
+            $this->db = new PDO('sqlite:/app/database/chat.db');
             $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (\PDOException $e) {
             throw new \Exception('Database connection failed: ' . $e->getMessage());

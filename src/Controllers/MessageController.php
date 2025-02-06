@@ -21,8 +21,7 @@ class MessageController
     // Method to handle message creation
     public function sendMessage(Request $request, Response $response, array $args)
     {
-        $rawdata = (string) $request->getBody(); // Get the request data
-        error_log("received data: " . $rawdata);
+        $rawdata = (string) $request->getBody();
         $data = json_decode($rawdata, true);
 
         // Extract data from the payload
@@ -67,7 +66,7 @@ class MessageController
             // Prepare the response data
             $responseData = [
                 'status' => 'success',
-                'message_id' => $messageId
+                'message_id' => $message
             ];
 
             // Set the response body with JSON and content type

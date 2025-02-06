@@ -120,7 +120,7 @@ class GroupModel
         // Bind the parameters
         $stmt->bindParam(':groupname', $groupname);
         $stmt->bindParam(':username', $username);
-        error_log('Checking if user: ' . $username . ' is in group: ' . $groupname);
+        error_log('Checking if ' . $username . ' is in group: ' . $groupname);
 
         // Execute the query
         if (!$stmt->execute()) {

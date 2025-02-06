@@ -66,7 +66,7 @@ class MessageController
             // Prepare the response data
             $responseData = [
                 'status' => 'success',
-                'message_id' => $message
+                'message' => $message
             ];
 
             // Set the response body with JSON and content type

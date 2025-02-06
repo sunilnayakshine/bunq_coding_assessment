@@ -249,8 +249,6 @@ and many more. Please feel free to explore the API and functionality.
  ## Unit Testing
 To run tests for the API:
 ```bash
-composer require --dev phpunit/phpunit
-composer require mockery/mockery --dev
 ./vendor/bin/phpunit.php tests
 ``` 
 
@@ -274,7 +272,7 @@ Below is the `composer.json` file for this project:
 
 ```json
 {
-    "name": "simple-api/simple-api",
+    "name": "bunq/online",
     "require": {
         "slim/slim": "^4.0",
         "slim/psr7": "^1.5",

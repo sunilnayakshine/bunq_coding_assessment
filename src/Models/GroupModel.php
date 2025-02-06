@@ -17,8 +17,33 @@ class GroupModel
         } catch (\PDOException $e) {
             throw new \Exception('Database connection failed: ' . $e->getMessage());
         }
+        $this->createTables();
     }
-    
+    // Create necessary tables (groups, group_members)
+    private function createTables()
+    {
+        // Create groups table if it doesn't exist
+        $query = '
+            CREATE TABLE IF NOT EXISTS groups (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                group_name TEXT NOT NULL,
+                group_type TEXT NOT NULL
+            )
+        ';
+        $this->db->exec($query);
+
+        // Create group_members table to handle user-group relationships
+        $query = '
+            CREATE TABLE IF NOT EXISTS group_members (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                group_id INTEGER,
+                user_id INTEGER,
+                FOREIGN KEY (group_id) REFERENCES groups(id),
+                FOREIGN KEY (user_id) REFERENCES users(id)
+            )
+        ';
+        $this->db->exec($query);
+    }
     // Create a new group
     public function createGroup(string $groupname, string $groupdescription, string $username): int
     {

@@ -36,7 +36,7 @@ To set up the project locally, follow these steps:
 	```
 
 
-Now the API should be up and running at `http://localhost:8000`.
+Now the API should be up and running at `http://localhost:8080`.
 
 ## API Endpoints
 
@@ -128,7 +128,7 @@ You can interact with the API by sending HTTP requests to the specified endpoint
 
 ### Example: Sign Up a User
 ```bash
-curl -X POST http://localhost:8000/sign-up \
+curl -X POST http://localhost:8080/sign-up \
     -H "Content-Type: application/json" \
     -d '{
         "username": "user1",
@@ -186,7 +186,7 @@ To make the code reviewer life easier I'm dropping a payload to test and verify 
 
 1. What if I sign up with username that already exists ?(Run twice)
 ```bash
-curl -X POST http://localhost:8000/sign-up \
+curl -X POST http://localhost:8080/sign-up \
 -H "Content-Type: application/json" \
 -d '{
       "username": "ImThere",

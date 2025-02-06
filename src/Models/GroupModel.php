@@ -17,7 +17,6 @@ class GroupModel
         } catch (\PDOException $e) {
             throw new \Exception('Database connection failed: ' . $e->getMessage());
         }
-        $this->createTables();
     }
     
     // Create a new group

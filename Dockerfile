@@ -33,6 +33,10 @@ RUN sqlite3 database/chat.db "SELECT name FROM sqlite_master WHERE type='table';
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 RUN composer install
+<<<<<<< HEAD
+=======
+
+>>>>>>> 59cedf2e4a019cb28dd005f5de92b6140166a1e4
 # Expose port 8080
 EXPOSE 8080
 
